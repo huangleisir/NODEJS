@@ -253,7 +253,7 @@ node.js 可以做网关模块  
  黄勇 微服务架构中的node.js 源代码---------
 第一个案例 app.js 
 http://123.207.56.239:1234/
-` js
+> 
 var http = require('http');
 
 var PORT = 1234;
@@ -269,7 +269,7 @@ app.listen(PORT, function () {
 });
 
 
-`
+
 
 
 
