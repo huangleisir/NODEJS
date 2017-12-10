@@ -270,7 +270,7 @@ app.listen(PORT, function () {
 ----------------------------------------
 第二个案例 app1.js
 http://123.207.56.239:2234/hello.html
-http://123.207.56.239:2234/index.html  请求不同的url，返回不同的.html页面
+http://123.207.56.239:2234/index.html  请求不同的url，返回不同的.html页面   与app1.js同一目录下面要有这两个页面哦
 -----------------
 var http = require('http');
 var fs = require('fs');
