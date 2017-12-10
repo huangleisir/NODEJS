@@ -295,6 +295,61 @@ app.listen(PORT, function () {
   console.log('server is running at %d', PORT);
 });
 -----------------------
+app2.js 是app1.js的加强版·
+var http = require('http');
+var fs = require('fs');
+
+var port = 1234;
+
+http.createServer(function (req, res) {
+  var url = req.url;
+  if (url == '/') {
+    url = '/index.html';
+  }
+  var path = __dirname + url;
+  fs.exists(path, function (exists) {
+    if (exists) {
+      fs.readFile(path, function (err, data) {
+        res.write(data.toString());
+        res.end();
+      });
+    } else {
+      res.writeHead(404);
+      fs.readFile(__dirname + '/404.html', function (err, data) {
+        res.write(data.toString());
+        res.end();
+      });
+    }
+  });
+}).listen(port, function () {
+  console.log('server is running at %d', port);
+});
+
+-----------------使用node.js实现反向代理
+1.安装HTTP Proxy模块
+npm install http-proxy
+创建proxy.js 
+-------------------
+var http = require('http');
+var httpProxy = require('http-proxy');
+
+var PORT = 4234;
+
+var proxy = httpProxy.createProxyServer();
+proxy.on('error', function (err, req, res) {
+    res.end();
+});
+
+var app = http.createServer(function (req, res) {
+  proxy.web(req, res, {
+    target: 'http://localhost:1234'
+  });
+});
+app.listen(PORT, function () {
+  console.log('server is running at %d', PORT);
+});
+访问 http://123.207.56.239:4234/
+跳转到 http://localhost:8080 所以之前要启动一个8080端口的服务
 
 
 
