@@ -352,7 +352,42 @@ app.listen(PORT, function () {
 跳转到 http://localhost:8080 所以之前要启动一个8080端口的服务
 
 
+那么还遗留下一个问题：如何在多台机器上部署集群的node.js 集群，单机肯定不行的
+这个博客可以参考一下
+https://www.cnblogs.com/sunshine-anycall/p/4680472.html 
 
+
+多机器的均衡
+
+使用cluster模块，你就可以更高效的使用硬件。然而，你还是被限制在单一的机器上。如果你的应用有客观的访问量，你最终还是把负载分部在不同的机器上。使用reverse proxy server可以把并发的访问负载到不同的服务器上。
+
+Nodejitsu开发了node-http-proxy模块，一个开源的nodejs应用代理服务。使用以下命令可以安装这个模块：
+
+npm install http-proxy
+实际的使用可以参考以下代码。在这里例子中负载被分发到两台服务器上。首先测试反转代理，确保HTTP server运行在8080和8081两个端口上。接下来，运行反转代理，然后用浏览器访问这个代理。如果一切正常的话，你会发现请求被两个服务器交替处理。
+
+复制代码
+var proxyServer = require('http-proxy');
+var port = parseInt(process.argv[2]);
+var servers = [
+  {
+    host: "localhost",
+    port: 8081
+  },
+  {
+    host: "localhost",
+    port: 8080
+  }
+];
+
+proxyServer.createServer(function (req, res, proxy) {
+  var target = servers.shift();
+
+  proxy.proxyRequest(req, res, target);
+  servers.push(target);
+}).listen(port);
+复制代码
+当然，这个例子只使用了一台机器。然而，如果你有多台机器的话，你可以在一台机器上运行反向代理服务器，其他的机器上运行HTTP server。
 
 
 
