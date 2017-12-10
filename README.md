@@ -249,6 +249,28 @@ http.createServer(onRequest).listen(8888);
 --------------------
 node.js 可以做网关模块  
 
+------上面的原理课程，底层太乏味了 ，我们直接上干货 
+ 黄勇 微服务架构中的node.js 源代码---------
+第一个案例 app.js 
+http://123.207.56.239:1234/
+` js
+var http = require('http');
+
+var PORT = 1234;
+
+var app = http.createServer(function (req, res) {
+  res.writeHead(200, {'Content-Type': 'text/html'});
+  console.log('server is running at %d', PORT);
+  res.write('<h1>Hello111</h1>');
+  res.end();
+});
+app.listen(PORT, function () {
+  console.log('server is running at %d', PORT);
+});
+
+
+`
+
 
 
 
