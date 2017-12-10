@@ -253,7 +253,7 @@ node.js 可以做网关模块  
  黄勇 微服务架构中的node.js 源代码---------
 第一个案例 app.js 
 http://123.207.56.239:1234/
-> 
+-----------------------------------
 var http = require('http');
 
 var PORT = 1234;
@@ -267,9 +267,34 @@ var app = http.createServer(function (req, res) {
 app.listen(PORT, function () {
   console.log('server is running at %d', PORT);
 });
+----------------------------------------
+第二个案例 app1.js
+http://123.207.56.239:2234/hello.html
+http://123.207.56.239:2234/index.html  请求不同的url，返回不同的.html页面
+-----------------
+var http = require('http');
+var fs = require('fs');
 
+var PORT = 1234;
 
-
+var app = http.createServer(function (req, res) {
+	console.info("req:"+req);
+	console.info("_dirname:"+_dirname);
+  var path = __dirname + req.url;  #__dirname 两个相连的下划线，很容易弄错
+  fs.readFile(path, function (err, data) {
+    if (err) {
+    	console.info("----err------");
+      res.end();
+      return;
+    }
+    res.write(data.toString());
+    res.end();
+  });
+});
+app.listen(PORT, function () {
+  console.log('server is running at %d', PORT);
+});
+-----------------------
 
 
 
