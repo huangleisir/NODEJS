@@ -60,7 +60,7 @@ http.createServer(function (request, response) {
 console.log('Server running at http://127.0.0.1:8888/');
 保存并关闭server.js 
 执行  nohup node server.js > server.log &  
-http://123.207.19.193:8888/ jiu
+http://123.207.19.193:8888/    
 
 
 
