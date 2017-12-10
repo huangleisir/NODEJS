@@ -30,6 +30,38 @@ source /etc/profile
 通过 npm 安装进程管理模块 forever
 npm install forever -g
 
+使用node.js  
+敲入node -v 命令，看看node 版本
+* 编写并运行自己的第一个脚本  
+vim hello.js
+  编写脚本  console.log("hello node.js");
+  保存并关闭
+  命令行执行该脚本  node hello.js 
+    如何以守护线程的形式，执行该脚本nohup 方式 怎么写这个执行脚本命令呢  这个问题提的有水平
+nohup node hello.js > hello.log &
+
+* 用node.js 创建自己的第一个网关应用
+ vim  server.js
+插入：
+var http = require('http');
+
+http.createServer(function (request, response) {
+
+    // 发送 HTTP 头部 
+    // HTTP 状态值: 200 : OK
+    // 内容类型: text/plain
+    response.writeHead(200, {'Content-Type': 'text/plain'});
+
+    // 发送响应数据 "Hello World"
+    response.end('Hello World\n');
+}).listen(8888);
+
+// 终端打印如下信息
+console.log('Server running at http://127.0.0.1:8888/');
+保存并关闭server.js 
+执行  nohup node server.js > server.log &  
+http://123.207.19.193:8888/ jiu
+
 
 
 
